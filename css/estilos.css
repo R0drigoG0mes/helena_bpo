@@ -77,7 +77,7 @@ nav,header{
     cursor: pointer;
 }
 
-.icon-plus:hover{
+.nova:hover{
     animation: girar 700ms forwards ease-in-out;
 }
 
@@ -197,4 +197,25 @@ iframe{
     left: 13%;
     z-index: 5;
     cursor: pointer;
+}
+
+.cancelar{
+    position: absolute;
+    color: red;
+    font-size: 1.1em;
+    top: 388px;
+    rotate: 45deg;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.xis1{
+    left: 373px;
+}
+
+.xis2{
+    left: 825px;
+}
+
+.xis3{
+    left: 1273px;
 }
