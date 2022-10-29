@@ -1,0 +1,109 @@
+<html lang="pt-br">
+    <head>
+        <link rel="stylesheet" href="icones/style.css">
+        <script src="js/script.js" defer></script>
+        <meta charset="UTF-8">
+
+    
+        <style>
+        
+            body{
+                margin: 0;
+                padding: 0;
+            }
+        
+            ul{
+                list-style-type: none;
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+            }
+            ul li{
+                float: right;
+                margin: 2px 5px 0px 5px;
+                color: white;
+                text-shadow: 1px 1px 1px black;
+            }
+        
+            span:hover{
+                cursor: pointer;
+            }
+        
+            .bottom{
+                background-color:rgb(0, 68, 110);
+                border-radius: 0px 0px 10px 10px;
+                position: relative;
+            }
+        
+            textarea{
+                width: 430px;
+                height: 300px;
+                resize: none;
+                border-radius: 10px 10px 0px 0px;
+                padding: 10px;
+                font-size: 1.2em;
+            }
+        
+            textarea:focus{
+                outline: none;
+            }
+
+            .salvar{
+                position: absolute;
+                right: 15px;
+            }
+
+            abbr{
+                text-decoration: none;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="tudo">
+            <textarea name="" id="caixa-texto" cols="50" rows="15"></textarea>
+            <div class="bottom">
+                <ul>
+                    <li class=""><abbr title="Salvar (Shift)"><span class="icon-checkmark salvar"></span></abbr></li>
+
+                    <li class=""><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left"></span></abbr></li>
+
+                    <li class=""><abbr title="Alinhar no Centro"><span class="icon-paragraph-center"></span></abbr></li>
+
+                    <li class=""><abbr title="Justificar"><span class="icon-paragraph-justify"></span></abbr></li>
+
+                    <li class=""><abbr title="Alinhar à Direita"><span class="icon-paragraph-right"></span></abbr></li>
+
+                    <li class=""><abbr title="Sublinhado"><span class="icon-underline"></span></abbr></li>
+
+                    <li class=""><abbr title="Tachado"><span class="icon-strikethrough"></span></abbr></li>
+
+                    <li class=""><abbr title="Itálico"><span class="icon-italic"></span></abbr></li>
+
+                    <li  class="negrito"><abbr title="Negrito"><span class="icon-bold"></span></abbr></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script>
+        var seila = '';
+        const btn_negrito = document.querySelector('.negrito');
+        const text_area = document.getElementById('caixa-texto');
+
+        document.addEventListener("select", teste)
+
+        function teste(){
+            var seila = window.getSelection();
+            return seila;
+        }
+
+        btn_negrito.addEventListener("click",deixarNegrito, false)
+
+        function deixarNegrito(){
+
+            document.createElement("p",seila);
+
+        }
+
+    </script>
+</html>

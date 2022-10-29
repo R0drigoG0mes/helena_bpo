@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    background-color: #eee;
+}
+
+nav,header{
+    height: 10vh;
+    background-color:rgb(0, 68, 110);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.562);
+    position: relative;
+}
+
+.config{
+    position: absolute;
+    right: 2vw;
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.pesquisa{
+    width: 30vw;
+    height: 5vh;
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%,-50%);
+    font-size: 1em;
+    border-radius: 5px;
+    padding: 3px;
+    border: none;
+    padding-right: 30px;
+}
+
+.pesquisa::placeholder{
+    font-size: 0.9em;
+}
+
+.pesquisa::-webkit-search-cancel-button{
+    display: none;
+}
+
+.pesquisa:focus{
+    outline: none;
+}
+
+.icon-search{
+    color: rgb(100, 100, 100);
+    font-size: 1em;
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    transform: translate(14.5vw,-50%);
+    right: 50%;
+    cursor: pointer;
+}
+
+.label-pesquisa{
+    display: none;
+}
+
+.icon-plus{
+    font-size: 2em;
+    color: white;
+    cursor: pointer;
+}
+
+.icon-plus:hover{
+    animation: girar 700ms forwards ease-in-out;
+}
+
+.btn-nova{
+    height: 3em;
+    width: 3em;
+    background-color:rgb(0, 68, 110);
+    position: absolute;
+    display: flex;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+/*ANIMAÇÕES*/
+
+@keyframes girar {
+
+    0%{
+        transform: rotate(0deg);
+    }
+
+    50%{
+        transform: rotate(-45deg);
+    }
+
+    100%{
+        transform: rotate(90deg);
+    }
+}
+
+/*NOTAS*/
+
+iframe{
+    margin: 20px 10px 20px 10px;
+    width: 430px;
+    height: 322px;
+}
