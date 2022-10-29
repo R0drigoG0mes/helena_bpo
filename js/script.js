@@ -2,7 +2,6 @@ const btn_nova = document.querySelector('.btn-nova');
 const meio = document.querySelector('.caderno');
 const btn_identifica = document.querySelector('.envia');
 const input_senha = document.querySelector("#identificar");
-const corpo = document.querySelector('.corpo');
 const container = document.querySelector('.identificar-container');
 const input_pesquisa = document.querySelector('.pesquisa');
 const nav = document.querySelector('.header');
@@ -136,4 +135,3 @@ function remover3(){
     xis3.style.display = 'none';
     valor--;
 }
-

@@ -61,7 +61,7 @@
     </head>
     <body>
         <div class="tudo">
-            <textarea name="" id="caixa-texto" cols="50" rows="15"></textarea>
+            <textarea name="" class="caixa-texto" cols="50" rows="15"></textarea>
             <div class="bottom">
                 <ul>
                     <li class=""><abbr title="Salvar (Shift)"><span class="icon-checkmark salvar"></span></abbr></li>
@@ -84,5 +84,44 @@
                 </ul>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+        <script>
+            const text_area = document.querySelector('.caixa-texto');
+            const btn_salvar = document.querySelector('.salvar');
+            var anotacao = '';
+
+            // ------------------------- SALVAR NOTA ----------------------
+
+            document.addEventListener("keydown",atribuir)
+
+            function atribuir(){
+                var anotacao = text_area.value;
+                return anotacao;
+            }
+
+            btn_salvar.addEventListener('click',salvar)
+
+            function salvar(){
+
+            var dados = new FormData();
+
+            dados.append('nota', anotacao);
+            dados.append('ocasiao', new Date().toDateString);
+
+            $.ajax({
+                url: 'index.php',
+                method: 'post',
+                data: dados,
+                processData: false,
+                contentType: false,
+                success: function(resposta){
+                    console.log(resposta)
+                }
+            })
+
+            }
+
+        </script>
     </body>
 </html>
