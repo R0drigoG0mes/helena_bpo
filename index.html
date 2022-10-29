@@ -9,12 +9,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="icones/style.css">
+    <link rel="stylesheet" href="icones/cadeado/style.css">
     <script src="js/script.js" defer></script>
     <title>Document</title>
 </head>
-<body>
-    <header>
-        <nav>
+<div class="identificar-container">
+    <p class="titulo-identificar">Senha</p>
+    <div class="cadeado">
+        <span class="icon-lock"></span>
+    </div>
+        <input type="password" name="identificar" id="identificar" class="identifica" required autocomplete="current-password">
+        <input type="submit" value="Enviar" name="enviar" class="envia">
+</div>
+<body class="corpo">
+    <header class="header">
+        <nav class="nav">
             <label for="ipesquisa" class="label-pesquisa">Pesquise Aqui</label>
             <input class="pesquisa" type="search" name="pesquisa" id="ipesquisa" placeholder="Pesquisa" >
             <div id="icone"><span class="icon-search"></span></div>

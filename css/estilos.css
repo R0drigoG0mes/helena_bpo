@@ -118,3 +118,83 @@ iframe{
     width: 430px;
     height: 322px;
 }
+
+/*Identificar*/
+
+.identificar-container{
+    position: absolute;
+    z-index: 3;
+    background-color:rgb(0, 37, 59);
+    width: 250px;
+    height: 300px;
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.548);
+}
+
+.titulo-identificar{
+    text-align: center;
+    padding: 10px;
+    color: white;
+    background-color:rgb(0, 68, 110);
+    border-radius: 10px 10px 0px 0px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.541);
+}
+
+.identifica{
+    margin-top: 50%;
+    margin-left: 50%;
+    transform: translate(-50%,-50%);
+    border-radius: 5px;
+    border: none;
+    padding: 3px 3px 3px 20px;
+    box-shadow: 1px 1px 10px rgb(0, 87, 141);
+}
+
+.identifica:focus{
+    outline: none;
+}
+
+.envia{
+    margin-left: 50%;
+    margin-top: 25%;
+    transform: translateX(-50%);
+    padding: 3px 15px 3px 15px;
+    background-color:rgb(0, 68, 110);
+    color: white;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: 1px solid white;
+    cursor: pointer;
+    box-shadow: 0px 0px 7px rgb(0, 79, 128);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.541);
+}
+
+.envia:hover{
+    background-color:rgb(0, 37, 59);
+    box-shadow: 0px 0px 10px rgb(0, 87, 141);
+}
+
+.icon-lock{
+    color: rgb(0, 37, 59);
+    position: absolute;
+    top: 52.5%;
+    left: 13%;
+    z-index: 5;
+    cursor: pointer;
+}
+
+.icon-unlocked{
+    color: rgb(0, 37, 59);
+    position: absolute;
+    top: 52.5%;
+    left: 13%;
+    z-index: 5;
+    cursor: pointer;
+}
