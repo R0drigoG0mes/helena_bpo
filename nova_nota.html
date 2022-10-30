@@ -106,8 +106,8 @@
 
             var dados = new FormData();
 
-            dados.append('nota', anotacao);
-            dados.append('ocasiao', new Date().toDateString);
+            dados.append('nota', text_area.value);
+            dados.append('ocasiao', new Date());
 
             $.ajax({
                 url: 'index.php',
@@ -119,6 +119,8 @@
                     console.log(resposta)
                 }
             })
+
+            text_area.value = '';
 
             }
 

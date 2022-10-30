@@ -24,6 +24,7 @@ input_senha.type = 'password';
 xis1.style.display = 'none';
 xis2.style.display = 'none';
 xis3.style.display = 'none';
+saida.style.display = 'none';
 
 const senha = 'lialinda';
 
@@ -36,7 +37,7 @@ function analisar(){
         nav.style.opacity = '100%';
         btn_nova.style.display = 'flex';
         btn_config.style.display = 'inline';
-        container.style.display = 'none'
+        container.style.display = 'none';
     }
     else{
         alert('Senha incorreta');

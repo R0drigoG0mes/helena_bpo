@@ -1,3 +1,35 @@
+<?php
+
+include_once('config.php');
+
+if(isset($_POST['nota']) && isset($_POST['ocasiao'])){
+
+    $mensagem = $_POST['nota'];
+    $data_mensagem = $_POST['ocasiao'];
+
+    $result = mysqli_query($conexao, "INSERT INTO mensagens(mensagem,data) VALUES ('$mensagem','$data_mensagem')");
+}
+
+// -------------- CARREGAR MENSAGENS DO BANCO DE DADOS ---------
+
+$sql = "SELECT * FROM `mensagens`";
+
+$result = $conexao -> query($sql);
+
+$numero_mensagens = mysqli_num_rows($result);
+
+$dados = $result ->fetch_array();
+
+// $dados["id"]
+
+// $string = "<p>aaaa</p>"
+
+// $string_final = $string + $string;
+
+// echo $string_final;
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -37,9 +69,10 @@
     <main class="caderno">
 
     </main>
-    <footer>
+    <footer class="carregar-msg">
 
     </footer>
+
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </body>
 </html>
