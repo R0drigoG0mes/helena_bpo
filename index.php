@@ -20,13 +20,12 @@ $numero_mensagens = mysqli_num_rows($result);
 
 $dados = $result ->fetch_array();
 
-// $dados["id"]
-
-// $string = "<p>aaaa</p>"
-
-// $string_final = $string + $string;
-
-// echo $string_final;
+function escrever_notas(){
+    foreach($dados as $linhas){
+        $texto = '<p class="notas_bd">{$dados["mensagem"]}</p>';
+        echo $texto;
+    }
+}
 
 ?>
 
@@ -43,7 +42,7 @@ $dados = $result ->fetch_array();
     <link rel="stylesheet" href="icones/style.css">
     <link rel="stylesheet" href="icones/cadeado/style.css">
     <script src="js/script.js" defer></script>
-    <title>Document</title>
+    <title>Anotações Comitê</title>
 </head>
 <body class="corpo">
     <span class="icon-plus cancelar xis1"></span>
@@ -70,7 +69,7 @@ $dados = $result ->fetch_array();
 
     </main>
     <footer class="carregar-msg">
-
+        <?php escrever_notas(); ?>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
