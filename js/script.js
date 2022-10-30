@@ -24,7 +24,6 @@ input_senha.type = 'password';
 xis1.style.display = 'none';
 xis2.style.display = 'none';
 xis3.style.display = 'none';
-saida.style.display = 'none';
 
 const senha = 'lialinda';
 

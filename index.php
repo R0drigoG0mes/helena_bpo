@@ -20,10 +20,12 @@ $numero_mensagens = mysqli_num_rows($result);
 
 $dados = $result ->fetch_array();
 
-function escrever_notas(){
-    foreach($dados as $linhas){
-        $texto = '<p class="notas_bd">{$dados["mensagem"]}</p>';
-        echo $texto;
+print_r($result);
+
+function escrever_anotacoes(){
+    foreach($result as $linha){
+        $texto = '<p class="nota-bd">{$linha}</p>';
+        echo $texto; 
     }
 }
 
@@ -69,7 +71,7 @@ function escrever_notas(){
 
     </main>
     <footer class="carregar-msg">
-        <?php escrever_notas(); ?>
+    <?php  escrever_anotacoes(); ?>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
