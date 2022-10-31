@@ -11,58 +11,76 @@ const cadeado = document.querySelector('.icon-lock');
 const xis1 = document.querySelector('.xis1');
 const xis2 = document.querySelector('.xis2');
 const xis3 = document.querySelector('.xis3');
+const output_entrou = document.querySelector('.entrou1');
+const area_texto = document.querySelector('.caixa-texto');
 
 //  -------------------  IDENTIFICAR  ---------------------
 
 var valor = 0;
 var contia = 0;
-input_pesquisa.disabled = true;
-nav.style.opacity = '60%';
-btn_nova.style.display = 'none';
-btn_config.style.display = 'none';
-input_senha.type = 'password';
 xis1.style.display = 'none';
 xis2.style.display = 'none';
 xis3.style.display = 'none';
-
+input_senha.type = 'password';
 const senha = 'lialinda';
 
-btn_identifica.addEventListener('click',analisar)
-cadeado.addEventListener('click',mostrar)
-
-function analisar(){
-    if(input_senha.value == senha){
-        input_pesquisa.disabled = false;
-        nav.style.opacity = '100%';
-        btn_nova.style.display = 'flex';
-        btn_config.style.display = 'inline';
-        container.style.display = 'none';
+function logado(){
+    if(document.cookie.includes('entrou')){
+    container.style.display = 'none';
+    input_pesquisa.disabled = false;
+    nav.style.opacity = '100%';
+    btn_nova.style.display = 'flex';
+    btn_config.style.display = 'inline';
     }
     else{
-        alert('Senha incorreta');
-        input_senha.value = '';
-        cadeado.classList.add('icon-lock');
-        cadeado.classList.remove('icon-unlocked');
-        input_senha.type = 'password';
+        container.style.display = 'block';
+        input_pesquisa.disabled = true;
+        nav.style.opacity = '60%';
+        btn_nova.style.display = 'none';
+        btn_config.style.display = 'none';
+
+        btn_identifica.addEventListener('click',analisar)
+        cadeado.addEventListener('click',mostrar)
+
+        function analisar(){
+            if(input_senha.value == senha){
+                input_pesquisa.disabled = false;
+                nav.style.opacity = '100%';
+                btn_nova.style.display = 'flex';
+                btn_config.style.display = 'inline';
+                container.style.display = 'none';
+                document.cookie = 'entrou' + '=' + 'sim';       
+            }
+            else{
+                alert('Senha incorreta');
+                input_senha.value = '';
+                cadeado.classList.add('icon-lock');
+                cadeado.classList.remove('icon-unlocked');
+                input_senha.type = 'password';
+            }
+        }
+
+        function mostrar(){
+            contia++;
+            if(contia == 1)
+            {
+                input_senha.type = 'text';
+                cadeado.classList.remove('icon-lock');
+                cadeado.classList.add('icon-unlocked');
+            }
+
+            if(contia == 2){
+                input_senha.type = 'password';
+                cadeado.classList.add('icon-lock');
+                cadeado.classList.remove('icon-unlocked');
+                contia = 0;
+            }
+        }
+
     }
 }
 
-function mostrar(){
-    contia++;
-    if(contia == 1)
-    {
-        input_senha.type = 'text';
-        cadeado.classList.remove('icon-lock');
-        cadeado.classList.add('icon-unlocked');
-    }
-
-    if(contia == 2){
-        input_senha.type = 'password';
-        cadeado.classList.add('icon-lock');
-        cadeado.classList.remove('icon-unlocked');
-        contia = 0;
-    }
-}
+logado();
 
 // ----------------------- NOVA NOTA ---------------------------
 
@@ -72,19 +90,20 @@ function adicionarNovaNota(){
     valor++;
 
     if(valor == 1){
-    meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe-1"></iframe>';
+    meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe1" contenteditable="true" name="iframe1"></iframe>';
     xis1.style.display = 'inline';
+
     }
 
     else if(valor == 2){
-        meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe-2"></iframe>';
+        meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe2" contenteditable="true" name="iframe2"></iframe>';
         xis1.style.display = 'inline';
         xis2.style.display = 'inline';
         xis2.style.left = '825px'
         }
 
     else if(valor == 3){
-         meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe-3"></iframe>';
+         meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe3" contenteditable="true" name="iframe3"></iframe>';
          xis1.style.display = 'inline';
          xis2.style.display = 'inline';
          xis3.style.display = 'inline';
@@ -95,7 +114,6 @@ function adicionarNovaNota(){
         alert('Quantidade máxima de rascunhos atingida');
         valor = 3;
     }
-
 }
 
 // -------------------- REMOVER RASCUNHO ----------------
@@ -105,7 +123,7 @@ xis2.addEventListener('click',remover2);
 xis3.addEventListener('click',remover3);
 
 function remover1(){
-    const iframe1 = document.getElementById("iframe-1");
+    const iframe1 = document.getElementById("iframe1");
     iframe1.remove();
     xis1.style.display = 'none';
     valor--;
@@ -119,7 +137,7 @@ function remover1(){
 }
 
 function remover2(){
-    const iframe2 = document.getElementById("iframe-2");
+    const iframe2 = document.getElementById("iframe2");
     iframe2.remove();
     xis2.style.display = 'none';
     valor--;
@@ -130,7 +148,7 @@ function remover2(){
 }
 
 function remover3(){
-    const iframe3 = document.getElementById("iframe-3");
+    const iframe3 = document.getElementById("iframe3");
     iframe3.remove();
     xis3.style.display = 'none';
     valor--;

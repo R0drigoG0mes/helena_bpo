@@ -2,46 +2,21 @@
 
 include_once('config.php');
 
+// -------------------- SALVAR NOTAS ----------------------
+
 if(isset($_POST['nota']) && isset($_POST['ocasiao'])){
 
     $mensagem = $_POST['nota'];
     $data_mensagem = $_POST['ocasiao'];
 
     $result = mysqli_query($conexao, "INSERT INTO mensagens(mensagem,data) VALUES ('$mensagem','$data_mensagem')");
-    escrever_anotacoes();
 }
 
 // -------------- CARREGAR MENSAGENS DO BANCO DE DADOS ---------
 
-function escrever_anotacoes(){
+$msg_sql = "SELECT * FROM `mensagens`";
 
-    $dbHost = 'LocalHost';
-    $dbUsername = 'root';
-    $dbPassword = '';
-    $dbName = 'comite_bpo';
-
-    $conexao = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
-
-    $sql = "SELECT `mensagem` FROM `mensagens`";
-
-    $result = $conexao -> query($sql);
-
-    $numero_mensagens = mysqli_num_rows($result);
-
-    for($linhas = $numero_mensagens; $linhas>0; $linhas--){
-
-        $msg_sql = "SELECT `mensagem` FROM `mensagens` WHERE `id` ={$linhas}";
-
-        $resultado = $conexao -> query($msg_sql);
-
-
-        echo '<p class="nota-bd" id="geradas">';
-        print_r(mysqli_fetch_column($resultado));
-        echo '</p>';
-
-    }
-    
-}
+$resultado2 = $conexao -> query($msg_sql);
 
 ?>
 
@@ -57,26 +32,27 @@ function escrever_anotacoes(){
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="icones/style.css">
     <link rel="stylesheet" href="icones/cadeado/style.css">
+    <script src="js/script.js" defer></script>
     <title>Anotações Comitê</title>
 
     <style>
         .nota-bd{
             padding: 10px;
             margin-bottom: 10px;
-            margin-top: 10px;
-            margin-left: 50vw;
-            transform: translateX(-50%);
-            width: 700px;
-            height: 100px;
-            text-align: center;
+            margin: 20px 10px 20px 10px;
+            width: 430px;
             border: 2px solid rgb(0, 68, 110);
-            border-radius: 10px;
             background-color: white;
+            display: inline-block;
         }
     </style>
 
 </head>
 <body class="corpo">
+    <?php if(isset($_COOKIE['entrou']))
+        {
+            echo '<output class="entrou1" style="display: none;">1</output>';
+        } ?>
     <span class="icon-plus cancelar xis1"></span>
     <span class="icon-plus cancelar xis2"></span>
     <span class="icon-plus cancelar xis3"></span>
@@ -91,39 +67,40 @@ function escrever_anotacoes(){
     <header class="header">
         <nav class="nav">
             <label for="ipesquisa" class="label-pesquisa">Pesquise Aqui</label>
-            <input class="pesquisa" type="search" name="pesquisa" id="ipesquisa" placeholder="Pesquisa" >
+            <input class="pesquisa" type="search" name="pesquisa" id="ipesquisa-1" placeholder="Pesquisa" >
             <div id="icone"><span class="icon-search"></span></div>
             <a href="#" class="config"><span class="icon-cog"></span></a>
         </nav>
     </header>
     <div class="btn-nova"><span class="icon-plus nova"></span></div>
+    
     <main class="caderno">
 
     </main>
-    <footer class="carregar-msg">
-        <?php if(isset($_POST['senha'])){escrever_anotacoes();}?>
-    </footer>
 
+    <footer class="carregar-msg" style="display: none; width: 100vw;">
+        <?php while($dados = mysqli_fetch_assoc($resultado2))
+                {
+                    echo '<p class="nota-bd" id="geradas">';
+                    echo $dados['mensagem'];
+                    echo '</p>';
+                } ?>
+    </footer>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
 
     <script>
-        const btn_senha = document.querySelector('.envia');
+        const footer = document.querySelector('.carregar-msg');
+        const identificar_quadro = document.querySelector('.identificar-container');
 
-        btn_senha.addEventListener('click',revelar_notas)
+        document.addEventListener("mousemove",revelar_notas)
 
         function revelar_notas(){
-
-            var identificou = 'sim';
-
-            $.ajax({
-                url: 'http://localhost/helena_bpo/index.php',
-                method: 'post',
-                data: {senha: identificou},
-                dataType: 'json'
-            }).done(function(result){
-                console.log(result);
-            });
+            if(identificar_quadro.style.display == 'none'){
+                footer.style.display = 'block';
+            }
+            else{
+                footer.style.display = 'none';
+            }
         }
     </script>
 </body>
