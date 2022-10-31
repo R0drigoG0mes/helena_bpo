@@ -8,25 +8,39 @@ if(isset($_POST['nota']) && isset($_POST['ocasiao'])){
     $data_mensagem = $_POST['ocasiao'];
 
     $result = mysqli_query($conexao, "INSERT INTO mensagens(mensagem,data) VALUES ('$mensagem','$data_mensagem')");
+    escrever_anotacoes();
 }
 
 // -------------- CARREGAR MENSAGENS DO BANCO DE DADOS ---------
 
-$sql = "SELECT * FROM `mensagens`";
-
-$result = $conexao -> query($sql);
-
-$numero_mensagens = mysqli_num_rows($result);
-
-$dados = $result ->fetch_array();
-
-print_r($result);
-
 function escrever_anotacoes(){
-    foreach($result as $linha){
-        $texto = '<p class="nota-bd">{$linha}</p>';
-        echo $texto; 
+
+    $dbHost = 'LocalHost';
+    $dbUsername = 'root';
+    $dbPassword = '';
+    $dbName = 'comite_bpo';
+
+    $conexao = new mysqli($dbHost,$dbUsername,$dbPassword,$dbName);
+
+    $sql = "SELECT `mensagem` FROM `mensagens`";
+
+    $result = $conexao -> query($sql);
+
+    $numero_mensagens = mysqli_num_rows($result);
+
+    for($linhas = $numero_mensagens; $linhas>0; $linhas--){
+
+        $msg_sql = "SELECT `mensagem` FROM `mensagens` WHERE `id` ={$linhas}";
+
+        $resultado = $conexao -> query($msg_sql);
+
+
+        echo '<p class="nota-bd" id="geradas">';
+        print_r(mysqli_fetch_column($resultado));
+        echo '</p>';
+
     }
+    
 }
 
 ?>
@@ -43,8 +57,24 @@ function escrever_anotacoes(){
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="icones/style.css">
     <link rel="stylesheet" href="icones/cadeado/style.css">
-    <script src="js/script.js" defer></script>
     <title>Anotações Comitê</title>
+
+    <style>
+        .nota-bd{
+            padding: 10px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            margin-left: 50vw;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 100px;
+            text-align: center;
+            border: 2px solid rgb(0, 68, 110);
+            border-radius: 10px;
+            background-color: white;
+        }
+    </style>
+
 </head>
 <body class="corpo">
     <span class="icon-plus cancelar xis1"></span>
@@ -71,9 +101,30 @@ function escrever_anotacoes(){
 
     </main>
     <footer class="carregar-msg">
-    <?php  escrever_anotacoes(); ?>
+        <?php if(isset($_POST['senha'])){escrever_anotacoes();}?>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
+
+    <script>
+        const btn_senha = document.querySelector('.envia');
+
+        btn_senha.addEventListener('click',revelar_notas)
+
+        function revelar_notas(){
+
+            var identificou = 'sim';
+
+            $.ajax({
+                url: 'http://localhost/helena_bpo/index.php',
+                method: 'post',
+                data: {senha: identificou},
+                dataType: 'json'
+            }).done(function(result){
+                console.log(result);
+            });
+        }
+    </script>
 </body>
 </html>
