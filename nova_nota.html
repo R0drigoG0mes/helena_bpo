@@ -35,17 +35,14 @@
                 position: relative;
             }
         
-            textarea{
-                width: 430px;
-                height: 300px;
+            iframe{
+                width: 410px;
+                height: 280px;
                 resize: none;
                 border-radius: 10px 10px 0px 0px;
                 padding: 10px;
                 font-size: 1.2em;
-            }
-        
-            textarea:focus{
-                outline: none;
+                background-color: white;
             }
 
             .salvar{
@@ -61,26 +58,26 @@
     </head>
     <body>
         <div class="tudo">
-            <textarea name="" id="editor" class="caixa-texto" cols="50" rows="15"></textarea>
+            <iframe src="about:blank" frameborder="0" contenteditable="true" name="texto_iframe" id="text_iframe"></iframe>
             <div class="bottom">
                 <ul>
                     <li class=""><abbr title="Salvar (Shift)"><span class="icon-checkmark salvar"></span></abbr></li>
+                    
+                    <li class=""><abbr title="Alinhar à Direita"><span class="icon-paragraph-right" onclick="alinhar_direita()"></span></abbr></li>
 
-                    <li class=""><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left"></span></abbr></li>
+                    <li class=""><abbr title="Alinhar no Centro"><span class="icon-paragraph-center" onclick="alinhar_centro()"></span></abbr></li>
 
-                    <li class=""><abbr title="Alinhar no Centro"><span class="icon-paragraph-center"></span></abbr></li>
+                    <li class=""><abbr title="Justificar"><span class="icon-paragraph-justify" onclick="justificar()"></span></abbr></li>
 
-                    <li class=""><abbr title="Justificar"><span class="icon-paragraph-justify"></span></abbr></li>
+                    <li class=""><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left" onclick="alinhar_esquerda()"></span></abbr></li>
 
-                    <li class=""><abbr title="Alinhar à Direita"><span class="icon-paragraph-right"></span></abbr></li>
+                    <li class=""><abbr title="Sublinhado"><span class="icon-underline" onclick="sublinhado()"></span></abbr></li>
 
-                    <li class=""><abbr title="Sublinhado"><span class="icon-underline"></span></abbr></li>
+                    <li class=""><abbr title="Tachado"><span class="icon-strikethrough" onclick="tachado()"></span></abbr></li>
 
-                    <li class=""><abbr title="Tachado"><span class="icon-strikethrough"></span></abbr></li>
+                    <li class=""><abbr title="Itálico"><span class="icon-italic" onclick="italico()"></span></abbr></li>
 
-                    <li class=""><abbr title="Itálico"><span class="icon-italic"></span></abbr></li>
-
-                    <li  class="negrito"><abbr title="Negrito"><span class="icon-bold"></span></abbr></li>
+                    <li  class="negrito"><abbr title="Negrito"><span class="icon-bold" onclick="bold()"></span></abbr></li>
                 </ul>
             </div>
         </div>
@@ -89,7 +86,8 @@
         <script>
             const text_area = document.querySelector('.caixa-texto');
             const btn_salvar = document.querySelector('.salvar');
-            var anotacao = '';
+            const iframe = document.getElementById("text_iframe")
+            const iframe_window = iframe.contentWindow;
 
             // ------------------------- SALVAR NOTA ----------------------
 
@@ -99,7 +97,7 @@
 
             var dados = new FormData();
 
-            dados.append('nota', text_area.value);
+            dados.append('nota', iframe_window.document.body.innerHTML);
             dados.append('ocasiao', new Date());
 
             $.ajax({
@@ -109,12 +107,46 @@
                 processData: false,
                 contentType: false,
                 success: function(resposta){
-                    console.log(resposta)
+                    console.log(resposta);
                 }
             })
 
-            text_area.value = '';
+            iframe_window.document.body.innerHTML = '';
 
+            }
+
+            texto_iframe.document.designMode = 'on';
+
+            var bold = function(){
+                texto_iframe.document.execCommand('bold', false, null);
+            }
+
+            var italico = function(){
+                texto_iframe.document.execCommand('italic', false, null);
+            }
+
+            var sublinhado = function(){
+                texto_iframe.document.execCommand('underline', false, null);
+            }
+
+            var tachado = function(){
+                texto_iframe.document.execCommand('strikeThrough', false, null);
+            }
+
+            var alinhar_direita = function(){
+                texto_iframe.document.execCommand('justifyRight', false, null);
+            }
+
+            var alinhar_esquerda = function(){
+                texto_iframe.document.execCommand('justifyLeft', false, null);
+            }
+
+            var justificar = function(){
+                texto_iframe.document.execCommand('justifyFull', false, null);
+            }
+
+            var alinhar_centro = function(){
+                texto_iframe.document.execCommand('justifyCenter', false, null);
             }
 
         </script>

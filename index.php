@@ -6,8 +6,10 @@ include_once('config.php');
 
 if(isset($_POST['nota']) && isset($_POST['ocasiao'])){
 
-    $mensagem = $_POST['nota'];
+    $mensagem = filter_input(INPUT_POST, 'nota', FILTER_SANITIZE_SPECIAL_CHARS);
+
     $data_mensagem = $_POST['ocasiao'];
+
 
     $result = mysqli_query($conexao, "INSERT INTO mensagens(mensagem,data) VALUES ('$mensagem','$data_mensagem')");
 }
@@ -41,9 +43,16 @@ $resultado2 = $conexao -> query($msg_sql);
             margin-bottom: 10px;
             margin: 20px 10px 20px 10px;
             width: 430px;
-            border: 2px solid rgb(0, 68, 110);
+            border-radius: 10px;
             background-color: white;
             display: inline-block;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .nota-bd:hover{
+            background-color: #ddd;
+            cursor: pointer;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
         }
     </style>
 
@@ -82,7 +91,7 @@ $resultado2 = $conexao -> query($msg_sql);
         <?php while($dados = mysqli_fetch_assoc($resultado2))
                 {
                     echo '<p class="nota-bd" id="geradas">';
-                    echo $dados['mensagem'];
+                    echo html_entity_decode($dados['mensagem']);
                     echo '</p>';
                 } ?>
     </footer>
