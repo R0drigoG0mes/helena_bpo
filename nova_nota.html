@@ -115,6 +115,8 @@
 
             }
 
+            //-------------------- NEGRITO - ITÁLICO ----------------
+
             texto_iframe.document.designMode = 'on';
 
             var bold = function(){
@@ -147,6 +149,17 @@
 
             var alinhar_centro = function(){
                 texto_iframe.document.execCommand('justifyCenter', false, null);
+            }
+
+            //--------------------- QUEBRAR LINHA IFRAME ------------------
+
+            iframe_window.addEventListener("keydown",quebrar_linha);
+
+            function quebrar_linha(){
+                if(iframe_window.document.body.innerHTML.length == '45'){
+                    iframe_window.document.body.innerHTML + '\r';
+                    alert('teste');
+                }
             }
 
         </script>
