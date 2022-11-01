@@ -43,22 +43,21 @@ $resultado2 = $conexao -> query($msg_sql);
             margin-bottom: 10px;
             margin: 20px 10px 20px 10px;
             width: 430px;
-            height: 350px;
+            height: 280px;
             border-radius: 10px;
             background-color: white;
             display: inline-block;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgb(0, 68, 110);
+            border: 1.5px solid black;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            font-size: 1.2em;
         }
 
         .nota-bd:hover{
             background-color: transparent;
-            cursor: grab;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-            color: white;
-            border: 1px solid white;
         }
 
         .icon-bin{
@@ -82,9 +81,9 @@ $resultado2 = $conexao -> query($msg_sql);
         {
             echo '<output class="entrou1" style="display: none;">1</output>';
         } ?>
-    <span class="icon-plus cancelar xis1"></span>
-    <span class="icon-plus cancelar xis2"></span>
-    <span class="icon-plus cancelar xis3"></span>
+    <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis1"></span></abbr>
+    <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis2"></span></abbr>
+    <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis3"></span></abbr>
     <div class="identificar-container">
         <p class="titulo-identificar">Senha</p>
         <div class="cadeado">

@@ -43,6 +43,7 @@
                 padding: 10px;
                 font-size: 1.2em;
                 background-color: white;
+                overflow-x: hidden;
             }
 
             .salvar{
@@ -61,7 +62,7 @@
             <iframe src="about:blank" frameborder="0" contenteditable="true" name="texto_iframe" id="text_iframe"></iframe>
             <div class="bottom">
                 <ul>
-                    <li class=""><abbr title="Salvar (Shift)"><span class="icon-checkmark salvar"></span></abbr></li>
+                    <li class=""><abbr title="Salvar (End)"><span class="icon-checkmark salvar"></span></abbr></li>
                     
                     <li class=""><abbr title="Alinhar à Direita"><span class="icon-paragraph-right" onclick="alinhar_direita()"></span></abbr></li>
 
@@ -87,20 +88,48 @@
             const text_area = document.querySelector('.caixa-texto');
             const btn_salvar = document.querySelector('.salvar');
             const iframe = document.getElementById("text_iframe")
+            texto_iframe.document.designMode = 'on';
             const iframe_window = iframe.contentWindow;
             var valor = -1;
+            
 
             iframe_window.document.body.style = 'font-family: monospace;';
             // ------------------------- SALVAR NOTA ----------------------
 
-            btn_salvar.addEventListener('click',salvar)
-            // document.addEventListener("keydown",salvar2(e))
+            texto_iframe.addEventListener("keydown",function(e){
+                if(e.key == 'End'){
+                    salvar();
+                }
+                else if(e.key == 'Enter'){
+                    valor--;
+                }
+
+                else if(e.key == 'Backspace'){
+                    valor--;
+                }
+                else if(e.key == 'Control'){
+                    texto_iframe.addEventListener("keydown",function(el){
+                        if(el.key == 'v'){
+                            texto_iframe.document.execCommand('justifyCenter', false, null);
+                        }
+                    })
+                }
+            });
+
+            btn_salvar.addEventListener('click',salvar);
 
             function salvar(){
 
             var dados = new FormData();
 
-            dados.append('nota', iframe_window.document.body.innerHTML);
+            var texto_bruto = iframe_window.document.body.innerHTML.toString();
+
+            var tratamento1 = texto_bruto.replace(/<div>/gi, '');
+            // var tratamento2 = tratamento1.replace(/</div>/gi, '')
+            
+            alert(tratamento2);
+
+            dados.append('nota', fav);
             dados.append('ocasiao', new Date());
 
             $.ajax({
@@ -120,7 +149,7 @@
 
             //-------------------- NEGRITO - ITÁLICO ----------------
 
-            texto_iframe.document.designMode = 'on';
+            // texto_iframe.document.designMode = 'on';
 
             var bold = function(){
                 texto_iframe.document.execCommand('bold', false, null);
