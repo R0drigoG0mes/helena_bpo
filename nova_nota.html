@@ -88,10 +88,13 @@
             const btn_salvar = document.querySelector('.salvar');
             const iframe = document.getElementById("text_iframe")
             const iframe_window = iframe.contentWindow;
+            var valor = -1;
 
+            iframe_window.document.body.style = 'font-family: monospace;';
             // ------------------------- SALVAR NOTA ----------------------
 
             btn_salvar.addEventListener('click',salvar)
+            // document.addEventListener("keydown",salvar2(e))
 
             function salvar(){
 
@@ -153,12 +156,13 @@
 
             //--------------------- QUEBRAR LINHA IFRAME ------------------
 
-            iframe_window.addEventListener("keydown",quebrar_linha);
+            texto_iframe.addEventListener("keydown",quebrar_linha);
 
             function quebrar_linha(){
-                if(iframe_window.document.body.innerHTML.length == '45'){
-                    iframe_window.document.body.innerHTML + '\r';
-                    alert('teste');
+                valor++;
+                while(valor == 55){
+                    texto_iframe.document.execCommand('insertParagraph', false, null);
+                    valor = 0;
                 }
             }
 

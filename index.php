@@ -43,16 +43,36 @@ $resultado2 = $conexao -> query($msg_sql);
             margin-bottom: 10px;
             margin: 20px 10px 20px 10px;
             width: 430px;
+            height: 350px;
             border-radius: 10px;
             background-color: white;
             display: inline-block;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgb(0, 68, 110);
+            position: relative;
+            overflow: hidden;
         }
 
         .nota-bd:hover{
-            background-color: #ddd;
-            cursor: pointer;
+            background-color: transparent;
+            cursor: grab;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid white;
+        }
+
+        .icon-bin{
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            cursor: pointer;
+        }
+
+        .icon-pencil{
+            position: absolute;
+            right: 30px;
+            bottom: 5px;
+            cursor: pointer;
         }
     </style>
 
@@ -92,6 +112,7 @@ $resultado2 = $conexao -> query($msg_sql);
                 {
                     echo '<p class="nota-bd" id="geradas">';
                     echo html_entity_decode($dados['mensagem']);
+                    echo '<span class="icon-pencil"></span><span class="icon-bin"></span>';
                     echo '</p>';
                 } ?>
     </footer>
@@ -111,6 +132,8 @@ $resultado2 = $conexao -> query($msg_sql);
                 footer.style.display = 'none';
             }
         }
+
+
     </script>
 </body>
 </html>
