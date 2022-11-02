@@ -62,7 +62,7 @@
             <iframe src="about:blank" frameborder="0" contenteditable="true" name="texto_iframe" id="text_iframe"></iframe>
             <div class="bottom">
                 <ul>
-                    <li class=""><abbr title="Salvar (End)"><span class="icon-checkmark salvar"></span></abbr></li>
+                    <li class=""><abbr title="Salvar (Shift Right)"><span class="icon-checkmark salvar"></span></abbr></li>
                     
                     <li class=""><abbr title="Alinhar à Direita"><span class="icon-paragraph-right" onclick="alinhar_direita()"></span></abbr></li>
 
@@ -94,16 +94,28 @@
             
 
             iframe_window.document.body.style = 'font-family: monospace;';
-            // ------------------------- SALVAR NOTA ----------------------
+
+            // ------------------------- QUEBRA DE LINHA ------------------
 
             texto_iframe.addEventListener("keydown",function(e){
-                if(e.key == 'End'){
+                if(e.code == 'ShiftRight'){
                     salvar();
                 }
                 else if(e.key == 'Enter'){
                     valor--;
                 }
-
+                else if(e.key == 'Dead'){
+                    valor--;
+                }
+                else if(e.key == 'Shift'){
+                    valor--;
+                }
+                else if(e.key == 'Tab'){
+                    valor--;
+                }
+                else if(e.key == 'CapsLock'){
+                    valor--;
+                }
                 else if(e.key == 'Backspace'){
                     valor--;
                 }
@@ -116,6 +128,8 @@
                 }
             });
 
+            //----------------------- SALVAR NOTA -----------------
+
             btn_salvar.addEventListener('click',salvar);
 
             function salvar(){
@@ -124,12 +138,11 @@
 
             var texto_bruto = iframe_window.document.body.innerHTML.toString();
 
-            var tratamento1 = texto_bruto.replace(/<div>/gi, '');
-            // var tratamento2 = tratamento1.replace(/</div>/gi, '')
-            
-            alert(tratamento2);
+            var tratamento1 = texto_bruto.replace(/<div>/gi, '<br>');
+            finaldiv = new RegExp('</div>', 'gi');
+            var tratamento2 = tratamento1.replace(finaldiv, '');
 
-            dados.append('nota', fav);
+            dados.append('nota', tratamento2);
             dados.append('ocasiao', new Date());
 
             $.ajax({
@@ -144,6 +157,7 @@
             })
 
             iframe_window.document.body.innerHTML = '';
+            location.reload();
 
             }
 
