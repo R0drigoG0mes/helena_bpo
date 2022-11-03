@@ -73,11 +73,15 @@ $contia = 0;
             box-shadow: 0px 0px 10px rgba(120, 139, 255, 0.5);
         }
 
-        .icon-bin{
+        .icon-bin, #alterou{
             position: absolute;
             right: 5px;
             bottom: 5px;
             cursor: pointer;
+        }
+
+        #alterou{
+            display: none;
         }
 
         .icon-pencil{
@@ -135,21 +139,32 @@ $contia = 0;
             color: red;
             transform: rotate(45deg);
             font-size: 1em;
+            animation: metadinha .7s forwards ease;
+        }
+
+        @keyframes metadinha {
+            from{
+                transform: rotate(0deg);
+            }
+
+            to{
+                transform: rotate(45deg);
+            }
         }
 
     </style>
 
 </head>
 <body class="corpo">
-    <ul class="editar">
-            <li><abbr title="Alinhar à Direita"><span class="icon-paragraph-right"></span></abbr></li>
-            <li><abbr title="Alinhar no Centro"><span class="icon-paragraph-center"></span></abbr></li>
-            <li><abbr title="Justificar"><span class="icon-paragraph-justify"></span></abbr></li>
-            <li><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left"></span></abbr></li>
-            <li><abbr title="Sublinhado"><span class="icon-underline"></span></abbr></li>
-            <li><abbr title="Tachado"><span class="icon-strikethrough"></span></abbr></li>
-            <li><abbr title="Itálico"><span class="icon-italic"></span></abbr></li>
-            <li><abbr title="Negrito"><span class="icon-bold"></span></abbr></li>
+    <ul class="editar" contenteditable="false">
+            <li><abbr title="Alinhar à Direita"><span class="icon-paragraph-right" id="alinhar_direita"></span></abbr></li>
+            <li><abbr title="Alinhar no Centro"><span class="icon-paragraph-center" id="alinhar_centro"></span></abbr></li>
+            <li><abbr title="Justificar"><span class="icon-paragraph-justify" id="justificar"></span></abbr></li>
+            <li><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left" id="alinhar_esquerda"></span></abbr></li>
+            <li><abbr title="Sublinhado"><span class="icon-underline" id="sublinhado"></span></abbr></li>
+            <li><abbr title="Tachado"><span class="icon-strikethrough" id="tachado"></span></abbr></li>
+            <li><abbr title="Itálico"><span class="icon-italic" id="italico"></span></abbr></li>
+            <li><abbr title="Negrito"><span class="icon-bold" id="negrito"></span></abbr></li>
     </ul>
     <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis1"></span></abbr>
     <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis2"></span></abbr>
@@ -183,7 +198,7 @@ $contia = 0;
                     echo '<p class="nota-bd" id="geradas">';
                     echo html_entity_decode($dados['mensagem']);
 
-                    echo '<abbr title="Editar"><span><span class="icon-pencil"></span><span></abbr><abbr title="Apagar"><span class="icon-bin" id="lixo"></span></abbr>';
+                    echo '<abbr title="Editar"><span><span class="icon-pencil"></span><span></abbr><abbr title="Apagar"><span class="icon-bin" id="lixo"></span></abbr><abbr title="Alterar"><span class="icon-checkmark" id="alterou"></span></abbr>';
                     echo '</p>';
                 } ?>
     </footer>
@@ -192,8 +207,21 @@ $contia = 0;
     <script>
         const footer = document.querySelector('.carregar-msg');
         const identificar_quadro = document.querySelector('.identificar-container');
-        const lixeira = document.getElementById("lixo2");
+        const lixeira = document.getElementById("lixo");
         const bodycego = document.querySelector('.corpo');
+        const alterar = document.getElementById("alterou");
+        numei = 0;
+
+        //-------------- EXEC COMMAND ------------
+
+        const alinhar_centro = document.getElementById("alinhar_centro");
+        const alinhar_esquerda = document.getElementById("alinhar_esquerda");
+        const justificar = document.getElementById("justificar");
+        const alinhar_direita = document.getElementById("alinhar_direita");
+        const sublinhado = document.getElementById("sublinhado");
+        const tachado = document.getElementById("tachado");
+        const italico = document.getElementById("italico");
+        const negrito = document.getElementById("negrito");
 
         //----------------- CARREGAR NOTAS ------------------
 
@@ -252,30 +280,71 @@ $contia = 0;
 
         document.addEventListener('click',function(e){
 
-            numei = 0;
-
             if(e.path[3] == '[object HTMLParagraphElement]'){
-                numei++;
 
                 const btns = document.querySelector('.editar');
                 const nota_carregada = document.querySelector('.nota-bd');
-                const lapis = document.querySelector('.icon-pencil');
+                const lapis = e.path[0];
+                numei++;
 
-                e.path[3].contentEditable = 'true';
-                e.path[3].designMode = 'on';
+                if(numei == 1){
 
-                btns.style.display = 'inline-block';
-                
-                e.path[3].insertAdjacentElement('beforeend',btns);
+                    if(numei == 1 && e.path[3].contentEditable == 'true' && e.path[3].designMode == 'on'){
+                        alert('Altere somente uma nota por vez!');
+                        numei = 1;
+                    }
+                    else{
 
-                btns.classList.add('surgir');
-                lapis.classList.remove('icon-pencil');
-                lapis.classList.add('icon-plus');
-                lapis.classList.add('fechar_editar');
+                        e.path[3].contentEditable = 'true';
+                        e.path[3].designMode = 'on';
+
+                        btns.style.display = 'inline-block';
+                        
+                        e.path[3].insertAdjacentElement('beforeend',btns);
+
+                        btns.classList.add('surgir');
+
+                        lapis.classList.remove('icon-pencil');
+                        lapis.classList.add('icon-plus');
+                        lapis.classList.add('fechar_editar');
+                        e.path[2].title = 'Cancelar';
+                        lixeira.style.display = 'none';
+                        alterar.style.display = 'inline-block';
+                    }
+
+                    negrito.addEventListener('click', bold)
+
+                    var bold = function(){
+                        e.path[3].innerHTML.execCommand('bold', false, null);
+                    }
+                }
+
+                if(numei == 2){
+
+                    if(numei == 2 && e.path[3].contentEditable == 'false' && e.path[3].designMode == 'off'){
+                        alert('Altere somente uma nota por vez!');
+                        numei = 2;
+                    }
+                    else{
+                        e.path[3].contentEditable = 'false';
+                        e.path[3].designMode = 'off';
+                        btns.style.display = 'none';
+                        btns.classList.remove('surgir');
+                        e.path[2].title = 'Editar';
+
+                        lapis.classList.remove('fechar_editar');
+                        lapis.classList.remove('icon-plus');
+                        lapis.classList.add('icon-pencil');
+                        numei = 0;
+                        lixeira.style.display = 'inline-block';
+                        alterar.style.display = 'none';
+                        lapis.style = 'font-size: 1em';
+                    }
+                }
+
             }
 
         })
-
     </script>
 </body>
 </html>
