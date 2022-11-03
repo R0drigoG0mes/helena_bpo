@@ -64,13 +64,13 @@ $contia = 0;
             border: 1.5px solid black;
             position: relative;
             overflow-x: hidden;
-            overflow-y: auto;
+            overflow-y: hidden;
             font-size: 1em;
             font-family: monospace;
         }
 
         .nota-bd:hover{
-            box-shadow: 0px 0px 10px #788BFF;
+            box-shadow: 0px 0px 10px rgba(120, 139, 255, 0.5);
         }
 
         .icon-bin{
@@ -86,10 +86,71 @@ $contia = 0;
             bottom: 5px;
             cursor: pointer;
         }
+
+        .editar{
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            z-index: 10;
+            width: 200px;
+            background-color: #004570;
+            color: white;
+            padding: 3px 2px 1px 0px;
+            border-radius: 0px 0px 0px 10px;
+            display: none;
+            left: 0;
+            bottom: -22px;
+            text-align: center;
+        }
+
+        .editar abbr{
+            text-decoration: none;
+        }
+
+        .editar li{
+            list-style-type: none;
+            float: right;
+            margin: 0px 3px 0px 3px;
+            cursor: pointer;
+        }
+
+        .surgir{
+            animation: surgindo .8s forwards ease;
+        }
+
+        @keyframes surgindo {
+            0%{
+                transform: translateY(-25%);
+            }
+            100%{
+                transform: translateY(-100%);
+            }
+        }
+
+        .fechar_editar{
+            position: absolute;
+            right: 30px;
+            bottom: 5px;
+            cursor: pointer;
+            color: red;
+            transform: rotate(45deg);
+            font-size: 1em;
+        }
+
     </style>
 
 </head>
 <body class="corpo">
+    <ul class="editar">
+            <li><abbr title="Alinhar à Direita"><span class="icon-paragraph-right"></span></abbr></li>
+            <li><abbr title="Alinhar no Centro"><span class="icon-paragraph-center"></span></abbr></li>
+            <li><abbr title="Justificar"><span class="icon-paragraph-justify"></span></abbr></li>
+            <li><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left"></span></abbr></li>
+            <li><abbr title="Sublinhado"><span class="icon-underline"></span></abbr></li>
+            <li><abbr title="Tachado"><span class="icon-strikethrough"></span></abbr></li>
+            <li><abbr title="Itálico"><span class="icon-italic"></span></abbr></li>
+            <li><abbr title="Negrito"><span class="icon-bold"></span></abbr></li>
+    </ul>
     <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis1"></span></abbr>
     <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis2"></span></abbr>
     <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis3"></span></abbr>
@@ -121,7 +182,7 @@ $contia = 0;
                 {
                     echo '<p class="nota-bd" id="geradas">';
                     echo html_entity_decode($dados['mensagem']);
-                    echo '<><>';
+
                     echo '<abbr title="Editar"><span><span class="icon-pencil"></span><span></abbr><abbr title="Apagar"><span class="icon-bin" id="lixo"></span></abbr>';
                     echo '</p>';
                 } ?>
@@ -190,9 +251,27 @@ $contia = 0;
         //---------------------------- EDITAR NOTA -------------------
 
         document.addEventListener('click',function(e){
+
+            numei = 0;
+
             if(e.path[3] == '[object HTMLParagraphElement]'){
+                numei++;
+
+                const btns = document.querySelector('.editar');
+                const nota_carregada = document.querySelector('.nota-bd');
+                const lapis = document.querySelector('.icon-pencil');
+
                 e.path[3].contentEditable = 'true';
                 e.path[3].designMode = 'on';
+
+                btns.style.display = 'inline-block';
+                
+                e.path[3].insertAdjacentElement('beforeend',btns);
+
+                btns.classList.add('surgir');
+                lapis.classList.remove('icon-pencil');
+                lapis.classList.add('icon-plus');
+                lapis.classList.add('fechar_editar');
             }
 
         })
