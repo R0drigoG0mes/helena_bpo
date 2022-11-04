@@ -206,22 +206,17 @@ $contia = 0;
 
                 var nota_limpa = nota_bruta.replace(separe, '');
 
-                window.open('janela.php', '_blank', 'width=700px, height=500px')
+                var janela_altera = window.open('janela.html', '_blank', 'width=700px, height=500px')
 
-                var mudar = new FormData();
+                janela_altera.addEventListener("load", function(){
 
-                mudar.append('alterar', nota_limpa);
+                    var adicao = '<p class="msg-alt" style="display: block;">' + nota_limpa + '</p>';
 
-                $.ajax({
-                url: 'janela.php',
-                method: 'post',
-                data: mudar,
-                processData: false,
-                contentType: false,
-                success: function(resposta){
-                    console.log('O AJAX FOI ENVIADO');
-                }
-                })
+                    var todos = janela_altera.document.getElementsByTagName('*');
+
+                    alert(todos[10]);
+
+                }) 
 
             }
 
