@@ -1,3 +1,9 @@
+<?php
+if(isset($_POST['alterar'])){
+    $alterar = $_POST['alterar'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -70,7 +76,7 @@
 
 </head>
 <body>
-
+    <p><?php echo $alterar; ?></p>
     <iframe src="about:blank" id="_iframe" name="iframe" contenteditable="true"></iframe>
     
     <ul>
@@ -85,6 +91,8 @@
     </ul>
 
     <abbr title="Salvar (Shift Right)"><span id="alterar" class="icon-checkmark salvar"></span></abbr>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
     <script>
         const iframe_id = document.getElementById("_iframe");
@@ -129,9 +137,7 @@
 
             //--------------------- RECEBER MENSAGENS -----------------
 
-            window.addEventListener("message", function(msg){
-                tela.document.body.innerHTML += msg.data;
-            })
+
 
     </script>
 

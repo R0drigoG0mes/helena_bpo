@@ -206,9 +206,22 @@ $contia = 0;
 
                 var nota_limpa = nota_bruta.replace(separe, '');
 
-                window.open('janela.html', '_blank', 'width=700px, height=500px')
+                window.open('janela.php', '_blank', 'width=700px, height=500px')
 
-                postMessage(nota_limpa, 'index.php');
+                var mudar = new FormData();
+
+                mudar.append('alterar', nota_limpa);
+
+                $.ajax({
+                url: 'janela.php',
+                method: 'post',
+                data: mudar,
+                processData: false,
+                contentType: false,
+                success: function(resposta){
+                    console.log('O AJAX FOI ENVIADO');
+                }
+                })
 
             }
 
