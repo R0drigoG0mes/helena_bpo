@@ -25,6 +25,17 @@ if(isset($_POST['deletar'])){
     
 }
 
+//---------------------- EDITAR NOTAS -------------------------
+
+if(isset($_POST['novo']) && isset($_POST['antigo'])){
+    $velha_nota = $_POST['antigo'];
+    $mudar_nota = $_POST['novo'];
+
+    $consulta = "UPDATE `mensagens` SET `mensagem` = '{$mudar_nota}' WHERE `mensagens`.`mensagem` = '{$velha_nota}';";
+
+    $executar_mudança = $conexao -> query($consulta);
+}
+
 // -------------- CARREGAR MENSAGENS DO BANCO DE DADOS ---------
 
 $msg_sql = "SELECT * FROM `mensagens`";
@@ -63,7 +74,7 @@ $contia = 0;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
             border: 1.5px solid black;
             position: relative;
-            overflow-x: hidden;
+            overflow-wrap: break-word;
             overflow-y: hidden;
             font-size: 1em;
             font-family: monospace;
@@ -75,32 +86,37 @@ $contia = 0;
 
         .icon-bin{
             position: absolute;
-            right: 5px;
-            bottom: 5px;
+            right: 1%;
+            bottom: 1%;
             cursor: pointer;
+            color: white;
+            background-color: #004570;
+            padding: 6px;
+            border-radius: 50%;
         }
 
         .icon-pencil{
             position: absolute;
-            right: 30px;
-            bottom: 5px;
+            right: 10%;
+            bottom: 1%;
             cursor: pointer;
+            color: white;
+            background-color: #004570;
+            padding: 6px;
+            border-radius: 50%;
         }
 
     </style>
 
 </head>
 <body class="corpo">
-    <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis1"></span></abbr>
-    <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis2"></span></abbr>
-    <abbr title="Remover Rascunho"><span class="icon-plus cancelar xis3"></span></abbr>
     <div class="identificar-container">
         <p class="titulo-identificar">Senha</p>
         <div class="cadeado">
             <span class="icon-lock"></span>
         </div>
             <input type="password" name="identificar" id="identificar" class="identifica" required autocomplete="current-password" tabindex="0">
-            <input type="submit" value="Enviar" name="enviar" class="envia">
+            <input type="submit" value="Enviar" name="enviar" class="envia" title="Enviar (Enter)">
     </div>
     <header class="header">
         <nav class="nav">
@@ -122,7 +138,6 @@ $contia = 0;
                 {
                     echo '<p class="nota-bd" id="geradas">';
                     echo html_entity_decode($dados['mensagem']);
-
                     echo '<abbr title="Editar"><span><span class="icon-pencil"></span><span></abbr><abbr title="Apagar"><span class="icon-bin" id="lixo"></span></abbr>';
                     echo '</p>';
                 } ?>
@@ -135,7 +150,6 @@ $contia = 0;
         const lixeira = document.getElementById("lixo");
         const bodycego = document.querySelector('.corpo');
         const alterar = document.getElementById("alterou");
-        numei = 0;
 
         //----------------- CARREGAR NOTAS ------------------
 
@@ -186,6 +200,9 @@ $contia = 0;
                     location.reload();
                     location.reload();
                     location.reload();
+                    location.reload();
+                    location.reload();
+                    location.reload();
                 }
             }
         })
@@ -198,7 +215,6 @@ $contia = 0;
 
                 const nota_carregada = document.querySelector('.nota-bd');
                 const lapis = e.path[0];
-                numei++;
 
                 var nota_bruta = e.path[3].innerHTML;
 
@@ -208,16 +224,19 @@ $contia = 0;
 
                 var janela_altera = window.open('janela.html', '_blank', 'width=700px, height=500px')
 
-                janela_altera.addEventListener("load", function(){
+                var adicao = '<p class="msg-alt" style="display: block">'   + nota_limpa + '</p>';
 
-                    var adicao = '<p class="msg-alt" style="display: block;">' + nota_limpa + '</p>';
+                janela_altera.addEventListener("load", function(){
 
                     var todos = janela_altera.document.getElementsByTagName('*');
 
-                    alert(todos[10]);
+                    todos[10].innerHTML = nota_limpa;
 
-                }) 
+                    var tela2 = todos[11].contentWindow;
 
+
+                    // tela2.document.body.style = "overflow-wrap: break-word; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif";
+                })
             }
 
         })

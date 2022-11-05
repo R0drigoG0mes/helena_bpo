@@ -8,9 +8,6 @@ const nav = document.querySelector('.header');
 const header = document.querySelector('.nav');
 const btn_config = document.querySelector('.config');
 const cadeado = document.querySelector('.icon-lock');
-const xis1 = document.querySelector('.xis1');
-const xis2 = document.querySelector('.xis2');
-const xis3 = document.querySelector('.xis3');
 const output_entrou = document.querySelector('.entrou1');
 const area_texto = document.querySelector('.caixa-texto');
 
@@ -18,9 +15,6 @@ const area_texto = document.querySelector('.caixa-texto');
 
 var valor = 0;
 var contia = 0;
-xis1.style.display = 'none';
-xis2.style.display = 'none';
-xis3.style.display = 'none';
 input_senha.type = 'password';
 const senha = 'lialinda';
 
@@ -41,6 +35,12 @@ function logado(){
 
         btn_identifica.addEventListener('click',analisar)
         cadeado.addEventListener('click',mostrar)
+
+        window.addEventListener("keydown", function(e){
+            if(e.code == 'Enter' && container.style.display == 'block'){
+                analisar();
+            }
+        })
 
         function analisar(){
             if(input_senha.value == senha){
@@ -82,74 +82,15 @@ function logado(){
 
 logado();
 
-// ----------------------- NOVA NOTA ---------------------------
+//-------------------------------------------NOVA NOTA--------------------
 
-btn_nova.addEventListener('click',adicionarNovaNota)
-
-function adicionarNovaNota(){
-    valor++;
-
-    if(valor == 1){
-    meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe1" contenteditable="true" name="iframe1"></iframe>';
-    xis1.style.display = 'inline';
-
+btn_nova.addEventListener('click', nova_nota);
+window.addEventListener("keydown", function(e){
+    if(e.code == 'Home'){
+        nova_nota();
     }
+})
 
-    else if(valor == 2){
-        meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe2" contenteditable="true" name="iframe2"></iframe>';
-        xis1.style.display = 'inline';
-        xis2.style.display = 'inline';
-        xis2.style.left = '825px'
-        }
-
-    else if(valor == 3){
-         meio.innerHTML += '<iframe src="nova_nota.html" frameborder="0" id="iframe3" contenteditable="true" name="iframe3"></iframe>';
-         xis1.style.display = 'inline';
-         xis2.style.display = 'inline';
-         xis3.style.display = 'inline';
-         xis3.style.left = '1273px'
-        }
-
-    else{
-        alert('Quantidade máxima de rascunhos atingida');
-        valor = 3;
-    }
-}
-
-// -------------------- REMOVER RASCUNHO ----------------
-
-xis1.addEventListener('click',remover1);
-xis2.addEventListener('click',remover2);
-xis3.addEventListener('click',remover3);
-
-function remover1(){
-    const iframe1 = document.getElementById("iframe1");
-    iframe1.remove();
-    xis1.style.display = 'none';
-    valor--;
-    if(xis2.style.display == 'inline' && xis3.style.display == 'inline')
-    {xis2.style.left = '373px';
-    xis3.style.left = '825px';}
-    else{
-        xis3.style.left = '373px';
-        xis2.style.left = '373px';
-    }
-}
-
-function remover2(){
-    const iframe2 = document.getElementById("iframe2");
-    iframe2.remove();
-    xis2.style.display = 'none';
-    valor--;
-    if(xis3.style.display == 'inline' && xis1.style.display == 'inline')
-    {xis3.style.left = '825px';}
-    else
-    {xis3.style.left = '373px';}
-}
-
-function remover3(){
-    const iframe3 = document.getElementById("iframe3");
-    iframe3.remove();
-    xis3.style.display = 'none';
-    valor--;
+function nova_nota(){
+    const janela_nova_nota = window.open('nova_nota.html', '_blank','width=700px, height=500px');
 }

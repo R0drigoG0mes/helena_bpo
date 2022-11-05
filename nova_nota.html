@@ -6,125 +6,97 @@
 
     
         <style>
-        
+            iframe{
+                width: 650px;
+                height: 400px;
+                background-color: white;
+                border: 2px solid #005e99;
+                padding: 10px;
+                border-radius: 10px;
+                overflow-y: auto;
+                margin-bottom: 0px;
+            }
+    
+            iframe:focus{
+                outline: none;
+            }
+    
             body{
-                margin: 0;
-                padding: 0;
+                background-color: #ddd;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                box-sizing: border-box;
             }
-        
+    
             ul{
-                list-style-type: none;
                 display: inline-block;
-                margin: 0;
-                padding: 0;
-            }
-            ul li{
-                float: right;
-                margin: 2px 5px 0px 5px;
+                padding: 5px;
+                margin: 5px 0px 0px 0px;
+                list-style-type: none;
                 color: white;
+                border-radius: 50px;
+                background-color: #005e99;
+            }
+    
+            ul li{
+                float: left;
+                font-size: 1.2em;
+                margin: 0px 10px 0px 10px;
+                cursor: pointer;
                 text-shadow: 1px 1px 1px black;
             }
-        
-            span:hover{
-                cursor: pointer;
-            }
-        
-            .bottom{
-                background-color:rgb(0, 68, 110);
-                border-radius: 0px 0px 10px 10px;
-                position: relative;
-            }
-        
-            iframe{
-                width: 410px;
-                height: 280px;
-                resize: none;
-                border-radius: 10px 10px 0px 0px;
-                padding: 10px;
-                font-size: 1.2em;
-                background-color: white;
-                overflow-x: hidden;
-            }
-
+    
             .salvar{
                 position: absolute;
-                right: 15px;
+                right: 18px;
+                bottom: 16px;
+                color: green;
+                font-size: 1.4em;
+                cursor: pointer;
+                text-shadow: 1px 1px 1px black;
             }
-
-            abbr{
-                text-decoration: none;
+    
+            .salvar:hover{
+                color: rgb(0, 177, 0);
             }
-
+    
+            abbr{text-decoration: none;}
         </style>
+    
     </head>
     <body>
-        <div class="tudo">
-            <iframe src="about:blank" frameborder="0" contenteditable="true" name="texto_iframe" id="text_iframe"></iframe>
-            <div class="bottom">
-                <ul>
-                    <li class=""><abbr title="Salvar (Shift Right)"><span class="icon-checkmark salvar"></span></abbr></li>
-                    
-                    <li class=""><abbr title="Alinhar à Direita"><span class="icon-paragraph-right" onclick="alinhar_direita()"></span></abbr></li>
+        <p class="msg-alterar" style="display: none;"></p>
+        <iframe src="about:blank" id="_iframe" contenteditable="true" name="texto_iframe"></iframe>
+        
+        <ul>
+            <li><abbr title="Negrito"><span class="icon-bold" onclick="bold()"></span></abbr></li>
+            <li><abbr title="Itálico"><span class="icon-italic" onclick="italico()"></span></abbr></li>
+            <li><abbr title="Tachado"><span class="icon-strikethrough" onclick="tachado()"></span></abbr></li>
+            <li><abbr title="Sublinhado"><span class="icon-underline" onclick="sublinhado()"></span></abbr></li>
+            <li><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left" onclick="alinhar_esquerda()"></span></abbr></li>
+            <li><abbr title="Justificar"><span class="icon-paragraph-justify" onclick="justificar()"></span></abbr></li>
+            <li><abbr title="Alinhar no Centro"><span class="icon-paragraph-center" onclick="alinhar_centro()"></span></abbr></li>
+            <li><abbr title="Alinhar à Direita"><span class="icon-paragraph-right" onclick="alinhar_direita()"></span></abbr></li>
+        </ul>
+    
+        <abbr title="Salvar (Shift Right)"><span id="salvar" class="icon-checkmark salvar"></span></abbr>
 
-                    <li class=""><abbr title="Alinhar no Centro"><span class="icon-paragraph-center" onclick="alinhar_centro()"></span></abbr></li>
-
-                    <li class=""><abbr title="Justificar"><span class="icon-paragraph-justify" onclick="justificar()"></span></abbr></li>
-
-                    <li class=""><abbr title="Alinhar à Esquerda"><span class="icon-paragraph-left" onclick="alinhar_esquerda()"></span></abbr></li>
-
-                    <li class=""><abbr title="Sublinhado"><span class="icon-underline" onclick="sublinhado()"></span></abbr></li>
-
-                    <li class=""><abbr title="Tachado"><span class="icon-strikethrough" onclick="tachado()"></span></abbr></li>
-
-                    <li class=""><abbr title="Itálico"><span class="icon-italic" onclick="italico()"></span></abbr></li>
-
-                    <li  class="negrito"><abbr title="Negrito"><span class="icon-bold" onclick="bold()"></span></abbr></li>
-                </ul>
-            </div>
-        </div>
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
         <script>
-            const text_area = document.querySelector('.caixa-texto');
-            const btn_salvar = document.querySelector('.salvar');
-            const iframe = document.getElementById("text_iframe")
+            const btn_salvar = document.getElementById("salvar");
+            const iframe = document.getElementById("_iframe")
             texto_iframe.document.designMode = 'on';
             const iframe_window = iframe.contentWindow;
-            var valor = -1;
-            
+            iframe_window.document.body.style = "overflow-wrap: break-word; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;";
 
-            iframe_window.document.body.style = 'font-family: monospace;';
-
-            // ------------------------- QUEBRA DE LINHA ------------------
+            // ------------------------- SALVAR RAPIDO ------------------
 
             texto_iframe.addEventListener("keydown",function(e){
                 if(e.code == 'ShiftRight'){
                     salvar();
-                }
-                else if(e.key == 'Enter'){
-                    valor--;
-                }
-                else if(e.key == 'Dead'){
-                    valor--;
-                }
-                else if(e.key == 'Shift'){
-                    valor--;
-                }
-                else if(e.key == 'Tab'){
-                    valor--;
-                }
-                else if(e.key == 'CapsLock'){
-                    valor--;
-                }
-                else if(e.key == 'Backspace'){
-                    valor--;
-                }
-                else if(e.key == 'Control'){
-                    texto_iframe.addEventListener("keydown",function(el){
-                        if(el.key == 'v'){
-                            texto_iframe.document.execCommand('justifyCenter', false, null);
-                        }
-                    })
                 }
             });
 
@@ -157,8 +129,7 @@
             })
 
             iframe_window.document.body.innerHTML = '';
-            location.reload();
-
+            window.close();
             }
 
             //-------------------- NEGRITO - ITÁLICO ----------------
@@ -196,19 +167,6 @@
             var alinhar_centro = function(){
                 texto_iframe.document.execCommand('justifyCenter', false, null);
             }
-
-            //--------------------- QUEBRAR LINHA IFRAME ------------------
-
-            texto_iframe.addEventListener("keydown",quebrar_linha);
-
-            function quebrar_linha(){
-                valor++;
-                while(valor == 55){
-                    texto_iframe.document.execCommand('insertParagraph', false, null);
-                    valor = 0;
-                }
-            }
-
         </script>
     </body>
 </html>
