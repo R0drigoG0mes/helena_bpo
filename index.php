@@ -58,6 +58,7 @@ $contia = 0;
     <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="icones/style.css">
     <link rel="stylesheet" href="icones/cadeado/style.css">
+    <link rel="shortcut icon" href="images/21226126171579090778-128.png" type="image/x-icon">
     <script src="js/script.js" defer></script>
     <title>Anotações Comitê</title>
 
@@ -82,13 +83,14 @@ $contia = 0;
 
         .nota-bd:hover{
             box-shadow: 0px 0px 10px rgba(120, 139, 255, 0.5);
+            cursor: pointer;
         }
 
         .icon-bin{
             position: absolute;
             right: 1%;
             bottom: 1%;
-            cursor: pointer;
+            cursor: grab;
             color: white;
             background-color: #004570;
             padding: 6px;
@@ -99,7 +101,7 @@ $contia = 0;
             position: absolute;
             right: 10%;
             bottom: 1%;
-            cursor: pointer;
+            cursor: grab;
             color: white;
             background-color: #004570;
             padding: 6px;
@@ -136,7 +138,7 @@ $contia = 0;
     <footer class="carregar-msg" style="display: none; width: 100vw;">
         <?php while($dados = mysqli_fetch_assoc($resultado2))
                 {
-                    echo '<p class="nota-bd" id="geradas">';
+                    echo '<p class="nota-bd" id="geradas" title="Ler Nota">';
                     echo html_entity_decode($dados['mensagem']);
                     echo '<abbr title="Editar"><span><span class="icon-pencil"></span><span></abbr><abbr title="Apagar"><span class="icon-bin" id="lixo"></span></abbr>';
                     echo '</p>';
@@ -150,6 +152,7 @@ $contia = 0;
         const lixeira = document.getElementById("lixo");
         const bodycego = document.querySelector('.corpo');
         const alterar = document.getElementById("alterou");
+        const notas = document.querySelector('.nota-bd');
 
         //----------------- CARREGAR NOTAS ------------------
 
@@ -240,6 +243,27 @@ $contia = 0;
             }
 
         })
+
+        //--------------- LER NOTA-------------------
+
+            document.addEventListener('click',function(e){
+                if(e.path[0] == '[object HTMLParagraphElement]'){
+                   var ler_tela = window.open('ler.html', '_blank', 'width=700px, height=500px');
+
+                   ler_tela.addEventListener("load", function(){
+                    const filhos = ler_tela.document.getElementsByTagName('*');
+
+                    limpar = new RegExp('<abbr title="Editar"><span><span class="icon-pencil"></span><span></span></span></abbr><abbr title="Apagar"><span class="icon-bin" id="lixo"></span></abbr>', 'i');
+
+                    var leitura = e.path[0].innerHTML.replace(limpar, '');
+
+                    filhos[8].innerHTML = leitura;
+                   })
+                }
+
+            });
+
+
     </script>
 </body>
 </html>

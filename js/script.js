@@ -94,3 +94,20 @@ window.addEventListener("keydown", function(e){
 function nova_nota(){
     const janela_nova_nota = window.open('nova_nota.html', '_blank','width=700px, height=500px');
 }
+
+//-------------- PESQUISA ------------------
+
+input_pesquisa.addEventListener("input", function(e){
+    var filhos_body = document.body.getElementsByTagName('*');
+    
+    var footer_ = filhos_body[19];
+
+    var paragrafos = footer_.getElementsByTagName('*');
+
+    paragrafos.forEach((paragrafo) => {
+        if(paragrafo.textContent.includes(input_pesquisa.value)){
+            alert('achou');
+        }
+    });
+
+});
