@@ -78,7 +78,7 @@ $contia = 0;
             overflow-wrap: break-word;
             overflow-y: hidden;
             font-size: 1em;
-            font-family: monospace;
+            font-family: consolas;
         }
 
         .nota-bd:hover{
@@ -125,7 +125,21 @@ $contia = 0;
             <label for="ipesquisa" class="label-pesquisa">Pesquise Aqui</label>
             <input class="pesquisa" type="search" name="pesquisa" id="ipesquisa-1" placeholder="Pesquisa" >
             <div id="icone"><span class="icon-search"></span></div>
-            <a href="#" class="config"><span class="icon-cog"></span></a>
+            <a href="#" class="config" id="opcao"><span class="icon-cog"></span></a>
+            <ul class="atributos">
+                <li class="lista-t"><b>Tema</b></li>
+                <li class="tema" id="azul">Azul</li>
+                <li class="tema" id="roxo">Roxo</li>
+                <li class="tema" id="degrade">Degradê</li>
+                <li class="tema" id="dark">Dark</li>
+            </ul>
+            <ul class="atributos_2">
+                <li class="lista-t"><b>Fonte</b></li>
+                <li class="tema" style="font-family: system-ui;" id="systemui">System-ui</li>
+                <li class="tema" style="font-family: Arial;" id="arial">Arial</li>
+                <li class="tema" style="font-family: Verdana;" id="verdana">Verdana</li>
+                <li class="tema" style="font-family: consolas;" id="consolas">Consolas</li>
+            </ul>
         </nav>
     </header>
 
@@ -153,6 +167,13 @@ $contia = 0;
         const bodycego = document.querySelector('.corpo');
         const alterar = document.getElementById("alterou");
         const notas = document.querySelector('.nota-bd');
+
+        //----------------- MUDANÇAS COOKIES ----------------
+
+        const nave = document.querySelector('.nav');
+        const testao = document.querySelector('.header');
+        const mais = document.querySelector('.btn-nova');
+
 
         //----------------- CARREGAR NOTAS ------------------
 
@@ -263,6 +284,100 @@ $contia = 0;
 
             });
 
+        //-------- MUDANÇAS COOKIES -----------------
+        
+        //--------------- ROXO ----------------------
+
+        if(document.cookie.includes('roxo')){
+            nave.style = 'background-color: #5315b6';
+            mais.style = 'background-color: #5315b6';
+            var expan = document.querySelectorAll("span");
+            var listas = document.querySelectorAll("ul");
+            listas[0].style = 'background-color: #5315b6';
+            listas[1].style = 'background-color: #5315b6';
+            // expan[2].style.color = 'red';
+
+            valori = 5
+            while (valori < expan.length) {
+                span_momento = expan[valori]
+                span_momento.style = 'color: #ffffff; background-color: #5315b6;';
+                valori++;
+            }
+        }
+                
+        //--------------- Degradê ----------------------
+
+        if(document.cookie.includes('degrade')){
+            document.body.style = 'background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);';
+            nave.style = 'background-color: transparent';
+            testao.style = 'background-color: transparent';
+            mais.style = 'background-color: transparent; border: 2px solid white;';
+            var paras = document.querySelectorAll("p");
+            var expan = document.querySelectorAll("span");
+            var listas = document.querySelectorAll("ul");
+            listas[0].style = 'background-color: transparent';
+            listas[1].style = 'background-color: transparent';
+            // expan[2].style.color = 'red';
+
+            valori = 5
+            while (valori < expan.length) {
+                span_momento = expan[valori]
+                span_momento.style = 'color: #ffffff; background-color: transparent;';
+                valori++;
+            }
+
+            valora = 0
+            while (valora < paras.length) {
+                paras_momento = paras[valora];
+                paras_momento.style = 'color: #ffffff; background-color: transparent; border: 1px solid white;';
+                valora++;
+            }
+        }
+                
+        //--------------- Dark ----------------------
+
+        if(document.cookie.includes('dark')){
+            document.body.style = 'background-color: #201b2c';
+            nave.style = 'background-color: #00ff88';
+            mais.style = 'background-color: #00ff88';
+            var expan = document.querySelectorAll("span");
+            var listas = document.querySelectorAll("ul");
+            var paras = document.querySelectorAll("p");
+            listas[0].style = 'background-color: #00ff88';
+            listas[1].style = 'background-color: #00ff88';
+            // expan[2].style.color = 'red';
+
+            valori = 5
+            while (valori < expan.length) {
+                span_momento = expan[valori]
+                span_momento.style = 'color: #201b2c; background-color: #00ff88;';
+                valori++;
+            }
+
+            valora = 0
+            while (valora < paras.length) {
+                paras_momento = paras[valora];
+                paras_momento.style = 'color: #00ff88; background-color: transparent; border: 2px solid #514869;';
+                valora++;
+            }
+        }
+
+        //------------------- FONTES ------------------
+        if(document.cookie.includes('systemui')){
+            document.body.style = 'font-family: system-ui';
+        }
+
+        if(document.cookie.includes('arial')){
+            document.body.style = 'font-family: Arial';
+        }
+
+        if(document.cookie.includes('verdana')){
+            document.body.style = 'font-family: Verdana';
+        }
+
+        if(document.cookie.includes('consolas')){
+            document.body.style = 'font-family: consolas';
+        }
 
     </script>
 </body>
